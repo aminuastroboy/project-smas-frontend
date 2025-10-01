@@ -1,15 +1,13 @@
-import { Link } from "react-router-dom";
-
-export default function Sidebar() {
-  return (
-    <aside className="w-60 bg-gray-800 text-white p-6 space-y-4">
-      <h2 className="text-2xl font-bold mb-6">Menu</h2>
-      <nav className="flex flex-col space-y-3">
-        <Link to="/" className="hover:text-gray-300">Dashboard</Link>
-        <Link to="/exams" className="hover:text-gray-300">Exams</Link>
-        <Link to="/reports" className="hover:text-gray-300">Reports</Link>
-        <Link to="/settings" className="hover:text-gray-300">Settings</Link>
-      </nav>
-    </aside>
-  );
-}
+import { NavLink } from 'react-router-dom';
+export default function Sidebar(){ const base = 'flex flex-col p-4 space-y-2 text-gray-700'; return (
+  <aside className="w-64 bg-gray-50 border-r">
+    <div className="p-4 font-bold">Menu</div>
+    <nav className="p-4 space-y-2">
+      <NavLink className={base} to="/dashboard">Dashboard</NavLink>
+      <NavLink className={base} to="/students">Students</NavLink>
+      <NavLink className={base} to="/exams">Exams</NavLink>
+      <NavLink className={base} to="/reports">Reports</NavLink>
+      <NavLink className={base} to="/settings">Settings</NavLink>
+    </nav>
+  </aside>
+)}
