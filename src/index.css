@@ -1,3 +1,18 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root{
+  --bg:#f7fafc;
+  --card:#ffffff;
+  --muted:#718096;
+  --accent:#4f46e5;
+}
+.app { min-height:100vh; background:var(--bg); }
+.container { max-width:1000px; margin:28px auto; padding:16px; }
+.nav { display:flex; gap:12px; align-items:center; background:var(--card); padding:12px 16px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.04); }
+.nav a { padding:6px 10px; border-radius:6px; }
+.nav a:hover { background:#f1f5f9; }
+.card { background:var(--card); padding:16px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.grid { display:grid; gap:12px; grid-template-columns: 1fr 1fr; }
+input, textarea, select { width:100%; padding:10px; border-radius:6px; border:1px solid #e2e8f0; }
+button { background:var(--accent); color:white; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; }
+.muted { color:var(--muted); }
+.center { text-align:center; }
+.mb { margin-bottom:12px; }
