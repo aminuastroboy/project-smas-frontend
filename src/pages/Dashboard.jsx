@@ -1,13 +1,51 @@
-import React from 'react';
-export default function Dashboard() {
+import React from 'react'
+import { useAuth } from '../context/AuthContext'
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
+
+const sample = [
+  { name: 'Week 1', students: 12 },
+  { name: 'Week 2', students: 18 },
+  { name: 'Week 3', students: 9 },
+  { name: 'Week 4', students: 24 },
+]
+
+export default function Dashboard(){
+  const auth = useAuth()
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
-      <div className="grid grid-cols-3 gap-4">
-        <div className="bg-white p-4 rounded shadow">Total Students: 120</div>
-        <div className="bg-white p-4 rounded shadow">Exams Conducted: 15</div>
-        <div className="bg-white p-4 rounded shadow">Average Performance: 68%</div>
+      <div className="card mb">
+        <h2>Dashboard</h2>
+        <div className="muted">Welcome back, <strong>{auth.user?.name}</strong></div>
+      </div>
+
+      <div className="card mb">
+        <h3 className="mb">Quick stats</h3>
+        <div className="grid">
+          <div className="card">
+            <div className="muted">Exams created</div>
+            <div style={{fontSize:28}}>{(JSON.parse(localStorage.getItem('smas_exams')||'[]')).length}</div>
+          </div>
+          <div className="card">
+            <div className="muted">Registered users</div>
+            <div style={{fontSize:28}}>{(JSON.parse(localStorage.getItem('smas_users')||'[]')).length}</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="card">
+        <h3 className="mb">Activity (sample)</h3>
+        <div style={{width:'100%', height:240}}>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={sample}>
+              <Line type="monotone" dataKey="students" stroke="#4f46e5" />
+              <CartesianGrid stroke="#eee" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
-  );
+  )
 }
