@@ -16,30 +16,20 @@ function App(){
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className="app">
-          <Navbar />
-          <main className="container">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/dashboard" element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/exams" element={
-                <ProtectedRoute>
-                  <Exams />
-                </ProtectedRoute>
-              } />
-            </Routes>
-          </main>
-        </div>
+        <Navbar />
+        <main className="container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard/></ProtectedRoute>} />
+            <Route path="/exams" element={<ProtectedRoute><Exams/></ProtectedRoute>} />
+          </Routes>
+        </main>
       </BrowserRouter>
     </AuthProvider>
   )
 }
 
-createRoot(document.getElementById('root')).render(<App />)
+createRoot(document.getElementById('root')).render(<App/>)
