@@ -1,6 +1,6 @@
 {
-  "name": "project-smas-frontend-demo",
-  "version": "0.1.0",
+  "name": "project-smas-frontend-demo-roles",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "vite",
