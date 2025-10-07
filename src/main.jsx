@@ -4,13 +4,15 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import ProtectedRoute from './components/ProtectedRoute'
+import Splash from './pages/Splash'
 import Home from './pages/Home'
 import About from './pages/About'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Exams from './pages/Exams'
-import './index.css'
+import './styles.css'
+import './seed.js'
 
 function App(){
   return (
@@ -19,7 +21,8 @@ function App(){
         <Navbar />
         <main className="container">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Splash />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -32,4 +35,4 @@ function App(){
   )
 }
 
-createRoot(document.getElementById('root')).render(<App/>)
+createRoot(document.getElementById('root')).render(<App />)
