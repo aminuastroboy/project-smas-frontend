@@ -1,51 +1,32 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
-
-const sample = [
-  { name: 'Week 1', students: 12 },
-  { name: 'Week 2', students: 18 },
-  { name: 'Week 3', students: 9 },
-  { name: 'Week 4', students: 24 },
-]
 
 export default function Dashboard(){
-  const auth = useAuth()
-  return (
-    <div>
-      <div className="card mb">
-        <h2>Dashboard</h2>
-        <div className="muted">Welcome back, <strong>{auth.user?.name}</strong></div>
-      </div>
-
-      <div className="card mb">
-        <h3 className="mb">Quick stats</h3>
+  const { user } = useAuth()
+  if(!user) return null
+  if(user.role === 'Teacher'){
+    const exams = JSON.parse(localStorage.getItem('smas_exams')||'[]')
+    const users = JSON.parse(localStorage.getItem('smas_users')||'[]')
+    const results = JSON.parse(localStorage.getItem('smas_results')||'{}')
+    const totalSubmissions = Object.values(results).reduce((acc,arr)=>acc+(arr?.length||0),0)
+    return (
+      <div>
+        <div className="card"><h2>Teacher Dashboard</h2><p className="muted">Welcome {user.name}</p></div>
         <div className="grid">
-          <div className="card">
-            <div className="muted">Exams created</div>
-            <div style={{fontSize:28}}>{(JSON.parse(localStorage.getItem('smas_exams')||'[]')).length}</div>
-          </div>
-          <div className="card">
-            <div className="muted">Registered users</div>
-            <div style={{fontSize:28}}>{(JSON.parse(localStorage.getItem('smas_users')||'[]')).length}</div>
-          </div>
+          <div className="card"><div className="small muted">Exams</div><h3>{exams.length}</h3></div>
+          <div className="card"><div className="small muted">Registered users</div><h3>{users.length}</h3></div>
+          <div className="card"><div className="small muted">Submissions</div><h3>{totalSubmissions}</h3></div>
+          <div className="card"><div className="small muted">Your role</div><h3>{user.role}</h3></div>
         </div>
       </div>
-
-      <div className="card">
-        <h3 className="mb">Activity (sample)</h3>
-        <div style={{width:'100%', height:240}}>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={sample}>
-              <Line type="monotone" dataKey="students" stroke="#4f46e5" />
-              <CartesianGrid stroke="#eee" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+    )
+  } else {
+    const results = JSON.parse(localStorage.getItem('smas_results')||'{}')[user.id]||[]
+    return (
+      <div>
+        <div className="card"><h2>Student Dashboard</h2><p className="muted">Welcome {user.name}</p></div>
+        <div className="card"><h3>Your Results</h3>{results.length===0 ? <p className="muted">No results yet.</p> : <ul>{results.map((r,i)=>(<li key={i}>{r.examTitle}: {r.score}/{r.total}</li>))}</ul>}</div>
       </div>
-    </div>
-  )
+    )
+  }
 }
